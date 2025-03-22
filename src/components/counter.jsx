@@ -1,4 +1,7 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../redux/actions'
+
 const Counter = ({ counter, inc, decr, rnd }) => {
 	return (
 		<div className='w-full vh-100 bg-dark text-white d-flex justify-content-center align-items-center'>
@@ -30,14 +33,19 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return {
-		inc: () => dispatch({ type: 'INC' }),
-		decr: () => dispatch({ type: 'DECR' }),
-		rnd: () => {
-			const randomValue = Math.floor(Math.random() * 100)
-			dispatch({ type: 'RND', payload: randomValue })
-		},
-	}
+	return bindActionCreators(actions, dispatch)
+	// const { inc, decr, rnd } = bindActionCreators(actions, dispatch)
+	// return {
+	// 	inc,
+	// 	decr,
+	// 	rnd,
+	// 	// inc: () => dispatch({ type: 'INC' }),
+	// 	// decr: () => dispatch({ type: 'DECR' }),
+	// 	// rnd: () => {
+	// 	// 	const randomValue = Math.floor(Math.random() * 100)
+	// 	// 	dispatch({ type: 'RND', payload: randomValue })
+	// 	// },
+	// }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)

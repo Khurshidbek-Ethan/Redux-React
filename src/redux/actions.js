@@ -1,4 +1,7 @@
 // action
 export const inc = () => ({ type: 'INC' })
 export const decr = () => ({ type: 'DECR' })
-export const rnd = value => ({ type: 'RND', payload: value })
+export const rnd = () => ({
+	type: 'RND',
+	payload: Math.floor(Math.random() * 100),
+})
