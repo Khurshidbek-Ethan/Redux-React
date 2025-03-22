@@ -1,19 +1,43 @@
-const Counter = () => {
+import { connect } from 'react-redux'
+const Counter = ({ counter, inc, decr, rnd }) => {
 	return (
 		<div className='w-full vh-100 bg-dark text-white d-flex justify-content-center align-items-center'>
 			<div className='border border-5 w-50 p-5 rounded border-success border-opacity-50 d-flex align-items-center flex-column bg-secondary'>
 				<h1>
-					Counter: <span>0</span>
+					Counter: <span>{counter}</span>
 				</h1>
 
 				<div className='d-flex align-items-center gap-2'>
-					<button className='btn btn-success'>Increment</button>
-					<button className='btn btn-danger'>Decrement</button>
-					<button className='btn btn-info'>Random</button>
+					<button className='btn btn-success' onClick={inc}>
+						Increment
+					</button>
+					<button className='btn btn-danger' onClick={decr}>
+						Decrement
+					</button>
+					<button className='btn btn-info' onClick={rnd}>
+						Random
+					</button>
 				</div>
 			</div>
 		</div>
 	)
 }
 
-export default Counter
+const mapStateToProps = state => {
+	return {
+		counter: state.count,
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		inc: () => dispatch({ type: 'INC' }),
+		decr: () => dispatch({ type: 'DECR' }),
+		rnd: () => {
+			const randomValue = Math.floor(Math.random() * 100)
+			dispatch({ type: 'RND', payload: randomValue })
+		},
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
